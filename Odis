@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ODIS - Organización de Debates Institucionales y Sociales</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- ==========================================
+         ATAJOS DEL EDITOR:
+         - Clic: Seleccionar elemento
+         - Doble Clic: Editar texto
+         - Arrastrar: Reordenar (o mover si posición es libre)
+         - Ctrl+Z / Ctrl+Y: Deshacer / Rehacer
+         - Ctrl+D: Duplicar elemento seleccionado
+         - Supr: Eliminar elemento seleccionado
+         - ESC: Deseleccionar / Cerrar panel
+         ========================================== -->
+
+    <style id="site-styles">
+        /* 1. ESTÉTICA Y SISTEMA DE DISEÑO */
+        :root {
+            --bg: #ffffff;
+            --bg-soft: #f8f9fa;
+            --text: #1a1a1a;
+            --text-soft: #333333;
+            --accent: #002147;
+            --accent-2: #0a192f;
+            --radius: 12px;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --space-section: 5rem;
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+            --max-width: 1200px;
+        }
+
+        html { scroll-behavior: smooth; }
+        body { margin: 0; font-family: var(--font-main); background: var(--bg); color: var(--text); overflow-x: hidden; transition: background 0.3s, color 0.3s; }
+        * { box-sizing: border-box; }
+        
+        h1, h2, h3, h4, p { margin: 0; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; padding: 0; margin: 0; }
+        img { max-width: 100%; display: block; object-fit: cover; }
+
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem; }
+
+        /* HEADER */
+        header { position: sticky; top: 0; z-index: 100; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0,0,0,0.05); transition: all 0.3s ease; }
+        header .container { display: flex; justify-content: space-between; align-items: center; height: 80px; }
+        .logo { width: 50px; height: 50px; aspect-ratio: 1/1; border-radius: 8px; object-fit: cover; background: var(--accent); color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.2rem; overflow: hidden; }
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-links a { font-weight: 600; color: var(--accent); transition: opacity 0.2s; }
+        .nav-links a:hover { opacity: 0.7; }
+        .btn-primary { background: var(--accent); color: white; padding: 0.8rem 1.5rem; border-radius: var(--radius); font-weight: 600; border: none; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; display: inline-block; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+
+        /* HERO */
+        .hero { min-height: 80vh; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; background: linear-gradient(rgba(0,33,71,0.8), rgba(10,25,47,0.9)), url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&q=80') center/cover; color: white; padding: var(--space-section) 1.5rem; }
+        .hero h1 { font-size: clamp(2.5rem, 5vw, 5rem); font-weight: 800; margin-bottom: 1rem; line-height: 1.1; }
+        .hero p { font-size: clamp(1rem, 2vw, 1.25rem); font-weight: 300; margin-bottom: 2rem; max-width: 600px; margin-inline: auto; opacity: 0.9; }
+
+        /* SECTIONS */
+        section { padding: var(--space-section) 0; position: relative; }
+        .bg-soft { background: var(--bg-soft); }
+        .section-title { font-size: clamp(2rem, 3vw, 2.5rem); font-weight: 800; text-align: center; margin-bottom: 3rem; color: var(--accent); }
+
+        /* ABOUT */
+        .about-text { font-size: clamp(1.2rem, 2vw, 1.5rem); line-height: 1.6; text-align: center; max-width: 800px; margin: 0 auto; color: var(--text-soft); }
+
+        /* AUTHORITIES */
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+        .card { background: var(--bg); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: transform 0.3s ease; }
+        .card:hover { transform: translateY(-5px); }
+        .card img { width: 100%; height: 250px; object-position: top; }
+        .card-content { padding: 1.5rem; }
+        .card-content h3 { font-size: 1.25rem; font-weight: 800; color: var(--accent); margin-bottom: 0.25rem; }
+        .card-content .role { font-size: 0.9rem; font-weight: 600; color: var(--text-soft); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px; }
+        .card-content p { font-size: 0.95rem; color: var(--text-soft); line-height: 1.5; }
+
+        /* EVENTS */
+        .event-card { position: relative; border-radius: var(--radius); overflow: hidden; height: 300px; display: flex; align-items: flex-end; color: white; box-shadow: var(--shadow); }
+        .event-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); z-index: 1; }
+        .event-card img { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+        .event-info { position: relative; z-index: 2; padding: 2rem; }
+        .event-info h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem; }
+
+        /* FAQ */
+        .faq-item { border-bottom: 1px solid rgba(0,0,0,0.1); }
+        .faq-question { width: 100%; text-align: left; padding: 1.5rem 0; background: none; border: none; font-size: 1.1rem; font-weight: 600; font-family: inherit; color: var(--accent); cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease; font-size: 1rem; color: var(--text-soft); padding: 0; }
+        .faq-item.active .faq-answer { max-height: 500px; padding-bottom: 1.5rem; }
+        .faq-item.active .faq-icon { transform: rotate(180deg); }
+        .faq-icon { transition: transform 0.3s ease; }
+
+        /* FOOTER */
+        footer { background: var(--accent-2); color: white; padding: 3rem 0; text-align: center; }
+        footer p { opacity: 0.7; font-size: 0.9rem; margin-top: 1rem; }
+
+        /* ANIMATIONS */
+        @media (prefers-reduced-motion: no-preference) {
+            .animate-on-scroll { opacity: 0; transform: translateY(30px); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+            .animate-on-scroll.in-view { opacity: 1; transform: translateY(0); }
+        }
+
+        /* DARK MODE VARS */
+        body.dark-mode {
+            --bg: #121212; --bg-soft: #1e1e1e; --text: #f0f0f0; --text-soft: #b3b3b3; --accent: #64b5f6; --accent-2: #000000;
+        }
+        
+        /* RESPONSIVE PREVIEW MODES */
+        body.preview-tablet .container { max-width: 768px !important; }
+        body.preview-mobile .container { max-width: 375px !important; }
+        
+        @media (max-width: 768px) {
+            .nav-links { display: none; } /* Simplified mobile for demo */
+            .hero h1 { font-size: 2.5rem; }
+        }
+    </style>
+
+    <style id="editor-styles">
+        /* 3. UI DEL EDITOR VISUAL (Aislado) */
+        #odis-editor-root { position: fixed; inset: 0; pointer-events: none; z-index: 99999; font-family: sans-serif; }
+        #odis-editor-root * { box-sizing: border-box; }
+        
+        /* Editor Activo (Cuerpo) */
+        body.editor-active { padding-bottom: 50px; }
+        body.editor-active [data-editable]:hover { outline: 1px dashed rgba(0, 123, 255, 0.5); cursor: crosshair; }
+        body.editor-active img:hover, body.editor-active .img-editable:hover { opacity: 0.8; }
+        
+        /* Outline y Manijas */
+        #selection-overlay { position: absolute; border: 2px dashed #007bff; pointer-events: none; z-index: 9999; display: none; background: rgba(0, 123, 255, 0.05); }
+        .resize-handle { position: absolute; width: 10px; height: 10px; background: #fff; border: 2px solid #007bff; border-radius: 50%; pointer-events: auto; }
+        .handle-tl { top: -5px; left: -5px; cursor: nwse-resize; }
+        .handle-tc { top: -5px; left: calc(50% - 5px); cursor: ns-resize; }
+        .handle-tr { top: -5px; right: -5px; cursor: nesw-resize; }
+        .handle-ml { top: calc(50% - 5px); left: -5px; cursor: ew-resize; }
+        .handle-mr { top: calc(50% - 5px); right: -5px; cursor: ew-resize; }
+        .handle-bl { bottom: -5px; left: -5px; cursor: nesw-resize; }
+        .handle-bc { bottom: -5px; left: calc(50% - 5px); cursor: ns-resize; }
+        .handle-br { bottom: -5px; right: -5px; cursor: nwse-resize; }
+        #selection-label { position: absolute; top: -25px; left: -2px; background: #007bff; color: white; font-size: 10px; padding: 2px 6px; border-radius: 4px; pointer-events: auto; cursor: grab; }
+
+        /* Panel Flotante */
+        #editor-panel { position: fixed; top: 20px; right: 20px; width: 320px; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); border: 1px solid #ddd; pointer-events: auto; display: flex; flex-direction: column; max-height: 85vh; color: #333; transition: transform 0.3s; }
+        #editor-panel.collapsed { transform: translateX(110%); }
+        .panel-header { padding: 12px 15px; background: #f8f9fa; border-bottom: 1px solid #ddd; border-radius: 12px 12px 0 0; display: flex; justify-content: space-between; align-items: center; cursor: grab; font-weight: bold; }
+        .panel-tabs { display: flex; border-bottom: 1px solid #ddd; }
+        .tab-btn { flex: 1; padding: 8px; border: none; background: none; cursor: pointer; font-size: 12px; font-weight: bold; color: #666; }
+        .tab-btn.active { color: #007bff; border-bottom: 2px solid #007bff; }
+        .panel-body { padding: 15px; overflow-y: auto; flex: 1; }
+        .panel-body::-webkit-scrollbar { width: 5px; }
+        .panel-body::-webkit-scrollbar-thumb { background: #ccc; border-radius: 5px; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        
+        /* Controles de Panel */
+        .control-group { margin-bottom: 12px; }
+        .control-group label { display: block; font-size: 11px; margin-bottom: 4px; color: #555; font-weight: bold; }
+        .control-group input[type="text"], .control-group input[type="number"], .control-group select { width: 100%; padding: 6px; border: 1px solid #ccc; border-radius: 4px; font-size: 12px; }
+        .control-group input[type="color"] { width: 100%; height: 30px; padding: 0; border: none; }
+        .grid-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .btn-ui { width: 100%; padding: 8px; background: #f0f0f0; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; font-size: 12px; margin-bottom: 5px; transition: background 0.2s; }
+        .btn-ui:hover { background: #e0e0e0; }
+        .btn-danger { background: #ff4d4f; color: white; border-color: #ff4d4f; }
+        .btn-danger:hover { background: #ff7875; }
+        
+        /* Barra de Texto Contextual */
+        #text-toolbar { position: fixed; background: #333; color: white; padding: 5px; border-radius: 6px; display: none; gap: 5px; pointer-events: auto; z-index: 10000; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        #text-toolbar button { background: none; border: none; color: white; cursor: pointer; padding: 4px 8px; border-radius: 4px; }
+        #text-toolbar button:hover { background: #555; }
+        
+        /* Botones Dinámicos (+ Agregar) */
+        .add-btn { display: none; position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); background: #28a745; color: white; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: bold; cursor: pointer; border: 2px solid white; z-index: 90; pointer-events: auto; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        body.editor-active section, body.editor-active .grid-2, body.editor-active .grid-3 { position: relative; }
+        body.editor-active .add-btn { display: block; }
+        
+        /* Botón Cambiar Imagen */
+        .change-img-btn { display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.7); color: white; padding: 8px 12px; border-radius: 4px; font-size: 12px; cursor: pointer; pointer-events: auto; z-index: 100; border: 1px solid rgba(255,255,255,0.3); }
+        body.editor-active .img-wrapper { position: relative; display: inline-block; width: 100%; height: 100%; }
+        body.editor-active .img-wrapper:hover .change-img-btn { display: block; }
+        
+        /* Modales Custom */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(2px); display: none; justify-content: center; align-items: center; pointer-events: auto; z-index: 100000; }
+        .modal-box { background: white; padding: 20px; border-radius: 8px; width: 90%; max-width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .modal-title { font-size: 16px; font-weight: bold; margin-bottom: 15px; }
+        .modal-footer { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+        
+        /* Toast */
+        #toast-container { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); pointer-events: none; z-index: 100001; display: flex; flex-direction: column; gap: 10px; }
+        .toast { background: #333; color: white; padding: 10px 20px; border-radius: 30px; font-size: 13px; opacity: 0; transform: translateY(20px); transition: all 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .toast.show { opacity: 1; transform: translateY(0); }
+
+        /* Botón de Restaurar */
+        #restore-editor-btn { position: fixed; bottom: 10px; right: 10px; width: 30px; height: 30px; border-radius: 50%; background: rgba(0,0,0,0.1); color: #333; border: none; cursor: pointer; display: none; align-items: center; justify-content: center; pointer-events: auto; z-index: 99999; font-size: 16px; backdrop-filter: blur(5px); }
+        #restore-editor-btn:hover { background: rgba(0,0,0,0.3); color: white; }
+    </style>
+</head>
+<body>
+
+    <!-- ================= CONTENIDO DEL SITIO ================= -->
+    <div id="odis-site">
+        <header id="main-header" data-editable="true">
+            <div class="container">
+                <div class="logo img-wrapper" data-editable="true">
+                    <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='50' height='50'><rect width='50' height='50' fill='%23002147'/><text x='25' y='30' font-family='sans-serif' font-size='16' fill='white' text-anchor='middle'>O</text></svg>" alt="Logo ODIS" id="logo-img">
+                </div>
+                <nav class="nav-links" data-editable="true">
+                    <a href="#about" data-editable="true">Sobre Nosotros</a>
+                    <a href="#authorities" data-editable="true">Autoridades</a>
+                    <a href="#events" data-editable="true">Eventos</a>
+                    <a href="#faq" data-editable="true">Preguntas</a>
+                </nav>
+                <button class="btn-primary" data-editable="true">Contacto</button>
+            </div>
+        </header>
+
+        <section class="hero" id="hero" data-editable="true">
+            <div class="container animate-on-scroll">
+                <h1 data-editable="true">El Futuro del Debate Institucional</h1>
+                <p data-editable="true">Formamos líderes a través del pensamiento crítico, Modelos G20 y debates legislativos en Tucumán.</p>
+                <a href="#events" class="btn-primary" data-editable="true">Conocer Eventos</a>
+            </div>
+        </section>
+
+        <section id="about" data-editable="true">
+            <div class="container animate-on-scroll">
+                <h2 class="section-title" data-editable="true">Nuestra Misión</h2>
+                <div id="about-content">
+                    <p class="about-text" data-editable="true">ODIS es un espacio académico destinado a fomentar el diálogo, la diplomacia y el compromiso social en los jóvenes. Creemos firmemente que a través del debate estructurado, podemos construir una sociedad más empática y resolutiva.</p>
+                </div>
+                <div class="add-btn" onclick="ODIS.addParagraph('about-content')">+ Agregar Párrafo</div>
+            </div>
+        </section>
+
+        <section id="authorities" class="bg-soft" data-editable="true">
+            <div class="container animate-on-scroll">
+                <h2 class="section-title" data-editable="true">Autoridades</h2>
+                
+                <!-- Fila Superior -->
+                <div class="grid-2" id="auth-top">
+                    <div class="card" data-editable="true" draggable="true">
+                        <div class="img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80" alt="Presidente">
+                        </div>
+                        <div class="card-content">
+                            <h3 data-editable="true">Dr. Juan Pérez</h3>
+                            <div class="role" data-editable="true">Presidente</div>
+                            <p data-editable="true">Especialista en relaciones internacionales y liderazgo juvenil.</p>
+                        </div>
+                    </div>
+                    <div class="card" data-editable="true" draggable="true">
+                        <div class="img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80" alt="Vicepresidente">
+                        </div>
+                        <div class="card-content">
+                            <h3 data-editable="true">Lic. María Gómez</h3>
+                            <div class="role" data-editable="true">Vicepresidente</div>
+                            <p data-editable="true">Experta en políticas públicas y coordinación de asambleas.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fila Inferior: Secretarías -->
+                <h3 style="text-align:center; margin: 3rem 0 1.5rem; color: var(--accent);" data-editable="true">Secretarías</h3>
+                <div class="grid-3" id="auth-bottom">
+                    <div class="card" data-editable="true" draggable="true">
+                        <div class="img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1557425955-df376b5903c8?auto=format&fit=crop&w=400&q=80" alt="Secretaría">
+                        </div>
+                        <div class="card-content">
+                            <h3 data-editable="true">Secretaría de Redes</h3>
+                            <div class="role" data-editable="true">A cargo de: Carlos Ruiz</div>
+                            <p data-editable="true">Gestión de comunicación institucional y marketing digital.</p>
+                        </div>
+                    </div>
+                    <div class="card" data-editable="true" draggable="true">
+                        <div class="img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=400&q=80" alt="Secretaría">
+                        </div>
+                        <div class="card-content">
+                            <h3 data-editable="true">Secretaría Académica</h3>
+                            <div class="role" data-editable="true">A cargo de: Ana Silva</div>
+                            <p data-editable="true">Diseño de material de estudio y capacitaciones.</p>
+                        </div>
+                    </div>
+                    <div class="add-btn" onclick="ODIS.addCard('auth-bottom')">+ Agregar Secretaría</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="events" data-editable="true">
+            <div class="container animate-on-scroll">
+                <h2 class="section-title" data-editable="true">Nuestros Eventos</h2>
+                <div class="grid-2" id="events-grid">
+                    <div class="event-card" data-editable="true" draggable="true">
+                        <div class="img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1575320293627-7cd504eb6513?auto=format&fit=crop&w=600&q=80" alt="G20">
+                        </div>
+                        <div class="event-info">
+                            <h3 data-editable="true">Modelos G20</h3>
+                            <p data-editable="true">Simulaciones cumbre para estudiantes secundarios.</p>
+                        </div>
+                    </div>
+                    <div class="event-card" data-editable="true" draggable="true">
+                        <div class="img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&w=600&q=80" alt="Debate">
+                        </div>
+                        <div class="event-info">
+                            <h3 data-editable="true">Debates Legislativos</h3>
+                            <p data-editable="true">Experiencia parlamentaria y redacción de leyes.</p>
+                        </div>
+                    </div>
+                    <div class="add-btn" onclick="ODIS.addEvent('events-grid')">+ Agregar Evento</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="bg-soft" data-editable="true">
+            <div class="container animate-on-scroll">
+                <h2 class="section-title" data-editable="true">Preguntas Frecuentes</h2>
+                <div id="faq-container">
+                    <div class="faq-item" data-editable="true" draggable="true">
+                        <button class="faq-question" aria-expanded="false" onclick="ODIS.toggleFaq(this)">
+                            <span data-editable="true">¿Quiénes pueden participar?</span>
+                            <span class="faq-icon">▼</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p data-editable="true" style="padding-top:1rem;">Estudiantes secundarios y universitarios de toda la provincia de Tucumán interesados en el debate.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="add-btn" onclick="ODIS.addFaq('faq-container')">+ Agregar Pregunta</div>
+            </div>
+        </section>
+
+        <footer data-editable="true">
+            <div class="container animate-on-scroll">
+                <h3 data-editable="true" style="margin-bottom: 1rem;">ODIS Tucumán</h3>
+                <div style="display:flex; justify-content:center; gap: 1rem; margin-bottom: 1rem;" data-editable="true">
+                    <a href="#" data-editable="true">Instagram</a>
+                    <a href="#" data-editable="true">LinkedIn</a>
+                    <a href="#" data-editable="true">Mail</a>
+                </div>
+                <p data-editable="true">&copy; 2026 ODIS. Todos los derechos reservados.</p>
+            </div>
+        </footer>
+    </div>
+    <!-- ================= FIN CONTENIDO ================= -->
+
+    <!-- ================= UI DEL EDITOR (Aislado) ================= -->
+    <div id="odis-editor-root">
+        <!-- Switch de Modo -->
+        <div style="position:fixed; top:20px; left:20px; z-index:10000; display:flex; align-items:center; gap:10px; background:white; padding:10px 15px; border-radius:30px; box-shadow:0 4px 10px rgba(0,0,0,0.1); pointer-events:auto;">
+            <label style="font-size:14px; font-weight:bold; cursor:pointer; display:flex; align-items:center; gap:8px;">
+                <input type="checkbox" id="edit-mode-toggle" onchange="ODIS.toggleEditMode()" style="width:18px; height:18px;">
+                Modo Edición
+            </label>
+        </div>
+
+        <!-- Overlay de Selección -->
+        <div id="selection-overlay">
+            <div id="selection-label">Elemento</div>
+            <div class="resize-handle handle-tl" data-dir="tl"></div>
+            <div class="resize-handle handle-tc" data-dir="tc"></div>
+            <div class="resize-handle handle-tr" data-dir="tr"></div>
+            <div class="resize-handle handle-ml" data-dir="ml"></div>
+            <div class="resize-handle handle-mr" data-dir="mr"></div>
+            <div class="resize-handle handle-bl" data-dir="bl"></div>
+            <div class="resize-handle handle-bc" data-dir="bc"></div>
+            <div class="resize-handle handle-br" data-dir="br"></div>
+        </div>
+
+        <!-- Toolbar de Texto -->
+        <div id="text-toolbar">
+            <button onclick="document.execCommand('bold', false, null)"><b>B</b></button>
+            <button onclick="document.execCommand('italic', false, null)"><i>I</i></button>
+            <button onclick="document.execCommand('underline', false, null)"><u>U</u></button>
+            <input type="color" id="text-color-picker" onchange="document.execCommand('foreColor', false, this.value)" style="width:25px;height:25px;padding:0;border:none;background:none;">
+        </div>
+
+        <!-- Panel Flotante -->
+        <div id="editor-panel" style="display:none;">
+            <div class="panel-header" id="panel-header">
+                <span>Panel de Control</span>
+                <button onclick="ODIS.closePanel()" style="background:none;border:none;cursor:pointer;font-weight:bold;">✕</button>
+            </div>
+            <div class="panel-tabs">
+                <button class="tab-btn active" onclick="ODIS.switchTab('tab-element')">Elemento</button>
+                <button class="tab-btn" onclick="ODIS.switchTab('tab-page')">Página</button>
+                <button class="tab-btn" onclick="ODIS.switchTab('tab-file')">Archivo</button>
+            </div>
+            <div class="panel-body">
+                
+                <!-- Tab Elemento -->
+                <div id="tab-element" class="tab-content active">
+                    <p id="no-selection-msg" style="font-size:12px; color:#666;">Selecciona un elemento en la página para editarlo.</p>
+                    <div id="element-controls" style="display:none;">
+                        
+                        <div class="control-group">
+                            <label>Tamaño (Ancho / Alto)</label>
+                            <div class="grid-controls">
+                                <input type="text" id="prop-width" placeholder="ej. 100% o 300px" onchange="ODIS.updateStyle('width', this.value)">
+                                <input type="text" id="prop-height" placeholder="ej. auto o 200px" onchange="ODIS.updateStyle('height', this.value)">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label>Espaciado (Margin / Padding)</label>
+                            <div class="grid-controls">
+                                <input type="text" id="prop-margin" placeholder="Margin ej. 10px" onchange="ODIS.updateStyle('margin', this.value)">
+                                <input type="text" id="prop-padding" placeholder="Padding ej. 15px" onchange="ODIS.updateStyle('padding', this.value)">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label>Fondo y Color de Texto</label>
+                            <div class="grid-controls">
+                                <input type="color" id="prop-bg" onchange="ODIS.updateStyle('backgroundColor', this.value)">
+                                <input type="color" id="prop-color" onchange="ODIS.updateStyle('color', this.value)">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label>Borde (Radio / Estilo)</label>
+                            <div class="grid-controls">
+                                <input type="text" id="prop-radius" placeholder="Radio ej. 8px" onchange="ODIS.updateStyle('borderRadius', this.value)">
+                                <input type="text" id="prop-border" placeholder="Borde ej. 1px solid #000" onchange="ODIS.updateStyle('border', this.value)">
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label>Posición (Static / Absolute)</label>
+                            <select id="prop-position" onchange="ODIS.updateStyle('position', this.value)">
+                                <option value="static">Normal (Static)</option>
+                                <option value="relative">Relativo</option>
+                                <option value="absolute">Libre (Absolute)</option>
+                            </select>
+                        </div>
+
+                        <hr style="border:0; border-top:1px solid #eee; margin:15px 0;">
+                        <button class="btn-ui" onclick="ODIS.duplicateSelected()">Duplicar Elemento</button>
+                        <button class="btn-ui btn-danger" onclick="ODIS.deleteSelected()">Eliminar Elemento</button>
+                    </div>
+                </div>
+
+                <!-- Tab Página -->
+                <div id="tab-page" class="tab-content">
+                    <div class="control-group">
+                        <label>Color Principal (Acento)</label>
+                        <input type="color" id="global-accent" onchange="ODIS.updateVar('--accent', this.value)">
+                    </div>
+                    <div class="control-group">
+                        <label>Fondo General</label>
+                        <input type="color" id="global-bg" onchange="ODIS.updateVar('--bg', this.value)">
+                    </div>
+                    <div class="control-group">
+                        <label>Radio de Bordes Global</label>
+                        <input type="text" id="global-radius" onchange="ODIS.updateVar('--radius', this.value)">
+                    </div>
+                    <div class="control-group">
+                        <label>Modo Oscuro</label>
+                        <button class="btn-ui" onclick="document.body.classList.toggle('dark-mode')">Alternar Tema</button>
+                    </div>
+                    <div class="control-group">
+                        <label>Vista Previa</label>
+                        <div class="grid-controls">
+                            <button class="btn-ui" onclick="ODIS.setPreview('desktop')">Desktop</button>
+                            <button class="btn-ui" onclick="ODIS.setPreview('tablet')">Tablet</button>
+                            <button class="btn-ui" onclick="ODIS.setPreview('mobile')">Móvil</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Archivo -->
+                <div id="tab-file" class="tab-content">
+                    <button class="btn-ui" style="background:#007bff;color:white;border:none;" onclick="ODIS.exportHTML()">⬇ Exportar HTML Limpio</button>
+                    <button class="btn-ui" onclick="ODIS.saveToLocal()">💾 Guardar Progreso</button>
+                    <button class="btn-ui" onclick="ODIS.loadFromLocal()">📂 Cargar Progreso</button>
+                    <button class="btn-ui btn-danger" onclick="ODIS.resetSite()">↻ Restablecer Diseño</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón Restaurar Panel -->
+        <button id="restore-editor-btn" onclick="ODIS.restorePanel()">⚙</button>
+
+        <!-- Contenedor de Toasts -->
+        <div id="toast-container"></div>
+
+        <!-- Modal Confirmación -->
+        <div class="modal-overlay" id="confirm-modal">
+            <div class="modal-box">
+                <div class="modal-title" id="confirm-title">¿Estás seguro?</div>
+                <div id="confirm-msg" style="font-size:14px;color:#555;margin-bottom:20px;">Esta acción no se puede deshacer.</div>
+                <div class="modal-footer">
+                    <button class="btn-ui" style="width:auto;" onclick="ODIS.closeModal('confirm-modal')">Cancelar</button>
+                    <button class="btn-ui btn-danger" style="width:auto;" id="confirm-btn">Confirmar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Imagen -->
+        <div class="modal-overlay" id="image-modal">
+            <div class="modal-box">
+                <div class="modal-title">Cambiar Imagen</div>
+                <div class="control-group">
+                    <label>Subir Archivo Local</label>
+                    <input type="file" id="img-upload" accept="image/*" onchange="ODIS.handleImageUpload(event)">
+                </div>
+                <div style="text-align:center;margin:10px 0;font-size:12px;color:#999;">O</div>
+                <div class="control-group">
+                    <label>Pegar URL</label>
+                    <input type="text" id="img-url" placeholder="https://...">
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-ui" style="width:auto;" onclick="ODIS.closeModal('image-modal')">Cancelar</button>
+                    <button class="btn-ui" style="width:auto;background:#007bff;color:white;" onclick="ODIS.applyImage()">Aplicar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ================= FIN UI EDITOR ================= -->
+
+    <script>
+        /**
+         * MÓDULO PRINCIPAL: ODIS VISUAL EDITOR
+         */
+        const ODIS = (function() {
+            // --- ESTADO ---
+            let isEditing = false;
+            let selectedEl = null;
+            let history = [];
+            let historyIdx = -1;
+            let draggedEl = null;
+            let targetImgEl = null;
+
+            // Elementos UI
+            const ui = {
+                site: document.getElementById('odis-site'),
+                overlay: document.getElementById('selection-overlay'),
+                label: document.getElementById('selection-label'),
+                panel: document.getElementById('editor-panel'),
+                toolbar: document.getElementById('text-toolbar'),
+                toasts: document.getElementById('toast-container'),
+                inputs: {
+                    width: document.getElementById('prop-width'),
+                    height: document.getElementById('prop-height'),
+                    margin: document.getElementById('prop-margin'),
+                    padding: document.getElementById('prop-padding'),
+                    bg: document.getElementById('prop-bg'),
+                    color: document.getElementById('prop-color'),
+                    radius: document.getElementById('prop-radius'),
+                    border: document.getElementById('prop-border'),
+                    pos: document.getElementById('prop-position')
+                }
+            };
+
+            // --- INICIALIZACIÓN ---
+            function init() {
+                setupScrollAnimations();
+                setupDragAndDrop();
+                setupPanelDrag();
+                setupResizeHandles();
+                setupShortcuts();
+                
+                // Inject 'Cambiar' buttons to images
+                document.querySelectorAll('.img-wrapper').forEach(wrap => {
+                    if(!wrap.querySelector('.change-img-btn')) {
+                        let btn = document.createElement('div');
+                        btn.className = 'change-img-btn';
+                        btn.innerHTML = '📷 Cambiar';
+                        btn.onclick = (e) => { e.stopPropagation(); openImageModal(wrap.querySelector('img')); };
+                        wrap.appendChild(btn);
+                    }
+                });
+
+                // Global click interceptor
+                document.addEventListener('click', handleGlobalClick, true);
+                document.addEventListener('dblclick', handleDoubleClick, true);
+                document.addEventListener('selectionchange', handleTextSelection);
+                
+                saveState(); // Estado inicial
+            }
+
+            // --- ANIMACIONES ---
+            function setupScrollAnimations() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('in-view');
+                        }
+                    });
+                }, { threshold: 0.1 });
+                document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+            }
+
+            // --- TOGGLE MODO EDICIÓN ---
+            function toggleEditMode() {
+                isEditing = document.getElementById('edit-mode-toggle').checked;
+                if (isEditing) {
+                    document.body.classList.add('editor-active');
+                    ui.panel.style.display = 'flex';
+                    ui.panel.classList.remove('collapsed');
+                    document.getElementById('restore-editor-btn').style.display = 'none';
+                    showToast('Modo edición activado');
+                } else {
+                    document.body.classList.remove('editor-active');
+                    deselectAll();
+                    ui.panel.style.display = 'none';
+                    document.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+                    ui.toolbar.style.display = 'none';
+                    showToast('Modo producción (Limpio)');
+                }
+            }
+
+            function closePanel() {
+                ui.panel.style.display = 'none';
+                document.getElementById('restore-editor-btn').style.display = 'flex';
+                deselectAll();
+            }
+
+            function restorePanel() {
+                if(!isEditing) {
+                    document.getElementById('edit-mode-toggle').checked = true;
+                    toggleEditMode();
+                } else {
+                    ui.panel.style.display = 'flex';
+                    document.getElementById('restore-editor-btn').style.display = 'none';
+                }
+            }
+
+            // --- SELECCIÓN ---
+            function handleGlobalClick(e) {
+                if (!isEditing) return;
+                
+                // Ignorar clicks dentro de la UI del editor
+                if (e.target.closest('#odis-editor-root')) return;
+
+                const editable = e.target.closest('[data-editable], section, .card, .event-card, p, h1, h2, h3, img');
+                if (editable) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    selectElement(editable);
+                } else {
+                    deselectAll();
+                }
+            }
+
+            function selectElement(el) {
+                if (selectedEl === el) return;
+                if (selectedEl) selectedEl.removeAttribute('contenteditable'); // Quitar edicion texto previo
+                
+                selectedEl = el;
+                updateOverlay();
+                
+                // Actualizar Panel
+                document.getElementById('no-selection-msg').style.display = 'none';
+                document.getElementById('element-controls').style.display = 'block';
+                
+                const style = window.getComputedStyle(el);
+                ui.inputs.width.value = el.style.width || style.width;
+                ui.inputs.height.value = el.style.height || style.height;
+                ui.inputs.margin.value = el.style.margin || style.margin;
+                ui.inputs.padding.value = el.style.padding || style.padding;
+                ui.inputs.radius.value = el.style.borderRadius || style.borderRadius;
+                ui.inputs.border.value = el.style.border || style.border;
+                ui.inputs.pos.value = style.position !== 'static' ? style.position : 'static';
+                
+                ui.label.innerText = el.tagName.toLowerCase() + (el.className ? '.'+el.className.split(' ')[0] : '');
+            }
+
+            function deselectAll() {
+                selectedEl = null;
+                ui.overlay.style.display = 'none';
+                document.getElementById('no-selection-msg').style.display = 'block';
+                document.getElementById('element-controls').style.display = 'none';
+                ui.toolbar.style.display = 'none';
+            }
+
+            function updateOverlay() {
+                if (!selectedEl) return;
+                const rect = selectedEl.getBoundingClientRect();
+                ui.overlay.style.display = 'block';
+                ui.overlay.style.top = (rect.top + window.scrollY) + 'px';
+                ui.overlay.style.left = (rect.left + window.scrollX) + 'px';
+                ui.overlay.style.width = rect.width + 'px';
+                ui.overlay.style.height = rect.height + 'px';
+            }
+
+            // Observador para actualizar el overlay cuando hay scroll o resize
+            window.addEventListener('scroll', () => { if(isEditing && selectedEl) updateOverlay(); });
+            window.addEventListener('resize', () => { if(isEditing && selectedEl) updateOverlay(); });
+
+            // --- TEXTO ---
+            function handleDoubleClick(e) {
+                if (!isEditing) return;
+                if (e.target.closest('#odis-editor-root')) return;
+                
+                const textNodes = ['P', 'H1', 'H2', 'H3', 'H4', 'SPAN', 'A', 'LI', 'DIV'];
+                if (textNodes.includes(e.target.tagName)) {
+                    e.preventDefault();
+                    e.target.setAttribute('contenteditable', 'true');
+                    e.target.focus();
+                }
+            }
+
+            function handleTextSelection() {
+                if (!isEditing) return;
+                const selection = window.getSelection();
+                if (selection.rangeCount > 0 && !selection.isCollapsed) {
+                    const range = selection.getRangeAt(0);
+                    const rect = range.getBoundingClientRect();
+                    ui.toolbar.style.display = 'flex';
+                    ui.toolbar.style.top = (rect.top - 40) + 'px';
+                    ui.toolbar.style.left = rect.left + 'px';
+                } else {
+                    ui.toolbar.style.display = 'none';
+                }
+            }
+
+            // --- MODIFICADORES ---
+            function updateStyle(prop, val) {
+                if (selectedEl) {
+                    selectedEl.style[prop] = val;
+                    updateOverlay();
+                    saveStateDebounced();
+                }
+            }
+            
+            function updateVar(name, val) {
+                document.documentElement.style.setProperty(name, val);
+                saveStateDebounced();
+            }
+
+            // --- DRAG Y RESIZE ---
+            function setupResizeHandles() {
+                let isResizing = false;
+                let currentHandle = null;
+                let startX, startY, startWidth, startHeight, startLeft, startTop;
+
+                document.querySelectorAll('.resize-handle').forEach(h => {
+                    h.addEventListener('mousedown', (e) => {
+                        e.stopPropagation();
+                        isResizing = true;
+                        currentHandle = h.dataset.dir;
+                        const rect = selectedEl.getBoundingClientRect();
+                        startX = e.clientX; startY = e.clientY;
+                        startWidth = rect.width; startHeight = rect.height;
+                        startLeft = rect.left; startTop = rect.top;
+                        document.body.style.cursor = window.getComputedStyle(h).cursor;
+                    });
+                });
+
+                document.addEventListener('mousemove', (e) => {
+                    if (!isResizing || !selectedEl) return;
+                    
+                    const dx = e.clientX - startX;
+                    const dy = e.clientY - startY;
+                    
+                    if(currentHandle.includes('r')) selectedEl.style.width = (startWidth + dx) + 'px';
+                    if(currentHandle.includes('b')) selectedEl.style.height = (startHeight + dy) + 'px';
+                    // Implementacion basica (top/left resize requiere logica pos absoluta extra)
+                    
+                    updateOverlay();
+                });
+
+                document.addEventListener('mouseup', () => {
+                    if(isResizing) {
+                        isResizing = false;
+                        document.body.style.cursor = 'default';
+                        saveState();
+                    }
+                });
+                
+                // Mover panel flotante
+                const pHeader = document.getElementById('panel-header');
+                let pDrag = false, px, py;
+                pHeader.addEventListener('mousedown', e => { pDrag=true; px=e.clientX - ui.panel.offsetLeft; py=e.clientY - ui.panel.offsetTop; });
+                document.addEventListener('mousemove', e => { if(pDrag){ ui.panel.style.left = (e.clientX-px)+'px'; ui.panel.style.top = (e.clientY-py)+'px'; ui.panel.style.right='auto'; }});
+                document.addEventListener('mouseup', () => pDrag=false);
+            }
+
+            // HTML5 Drag and Drop (Reordenar)
+            function setupDragAndDrop() {
+                document.addEventListener('dragstart', e => {
+                    if(!isEditing || !e.target.draggable) return;
+                    draggedEl = e.target;
+                    e.target.style.opacity = 0.5;
+                });
+                document.addEventListener('dragover', e => {
+                    if(!isEditing || !draggedEl) return;
+                    e.preventDefault();
+                    const container = e.target.closest('.grid-2, .grid-3, #faq-container');
+                    if(container && e.target.closest('[draggable]')) {
+                        const target = e.target.closest('[draggable]');
+                        if(target !== draggedEl) {
+                            const rect = target.getBoundingClientRect();
+                            const next = (e.clientY - rect.top) / (rect.bottom - rect.top) > 0.5;
+                            container.insertBefore(draggedEl, next ? target.nextSibling : target);
+                            updateOverlay();
+                        }
+                    }
+                });
+                document.addEventListener('dragend', e => {
+                    if(draggedEl) draggedEl.style.opacity = '';
+                    draggedEl = null;
+                    saveState();
+                });
+            }
+
+            // --- CREADORES DINÁMICOS ---
+            function addParagraph(containerId) {
+                const p = document.createElement('p');
+                p.className = 'about-text';
+                p.setAttribute('data-editable', 'true');
+                p.innerText = 'Nuevo párrafo editable. Haz doble clic para modificar el texto.';
+                p.style.marginTop = '1rem';
+                document.getElementById(containerId).appendChild(p);
+                saveState();
+            }
+
+            function addCard(containerId) {
+                const html = `
+                    <div class="card" data-editable="true" draggable="true">
+                        <div class="img-wrapper">
+                            <img src="https://via.placeholder.com/400x250?text=Nueva+Imagen" alt="Placeholder">
+                            <div class="change-img-btn" onclick="event.stopPropagation(); ODIS.openImageModal(this.previousElementSibling)">📷 Cambiar</div>
+                        </div>
+                        <div class="card-content">
+                            <h3 data-editable="true">Nueva Entidad</h3>
+                            <div class="role" data-editable="true">A cargo de: Nombre</div>
+                            <p data-editable="true">Descripción de la nueva tarjeta agregada.</p>
+                        </div>
+                    </div>`;
+                document.getElementById(containerId).insertAdjacentHTML('beforeend', html);
+                saveState();
+            }
+
+            function addEvent(containerId) {
+                const html = `
+                    <div class="event-card" data-editable="true" draggable="true">
+                        <div class="img-wrapper">
+                            <img src="https://via.placeholder.com/600x300?text=Nuevo+Evento" alt="Evento">
+                            <div class="change-img-btn" onclick="event.stopPropagation(); ODIS.openImageModal(this.previousElementSibling)">📷 Cambiar</div>
+                        </div>
+                        <div class="event-info">
+                            <h3 data-editable="true">Nuevo Evento</h3>
+                            <p data-editable="true">Descripción breve del evento institucional.</p>
+                        </div>
+                    </div>`;
+                document.getElementById(containerId).insertAdjacentHTML('beforeend', html);
+                saveState();
+            }
+
+            function addFaq(containerId) {
+                const html = `
+                    <div class="faq-item" data-editable="true" draggable="true">
+                        <button class="faq-question" aria-expanded="false" onclick="ODIS.toggleFaq(this)">
+                            <span data-editable="true">¿Nueva pregunta frecuente?</span>
+                            <span class="faq-icon">▼</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p data-editable="true" style="padding-top:1rem;">Respuesta editable correspondiente a la nueva pregunta.</p>
+                        </div>
+                    </div>`;
+                document.getElementById(containerId).insertAdjacentHTML('beforeend', html);
+                saveState();
+            }
+
+            function toggleFaq(btn) {
+                const item = btn.parentElement;
+                item.classList.toggle('active');
+                btn.setAttribute('aria-expanded', item.classList.contains('active'));
+                setTimeout(updateOverlay, 450);
+            }
+
+            // --- ACCIONES ELEMENTO ---
+            function duplicateSelected() {
+                if(!selectedEl) return;
+                const clone = selectedEl.cloneNode(true);
+                selectedEl.parentNode.insertBefore(clone, selectedEl.nextSibling);
+                saveState();
+            }
+
+            function deleteSelected() {
+                if(!selectedEl) return;
+                customConfirm('¿Eliminar este elemento permanentemente?', () => {
+                    selectedEl.remove();
+                    deselectAll();
+                    saveState();
+                });
+            }
+
+            // --- IMÁGENES ---
+            function openImageModal(imgEl) {
+                targetImgEl = imgEl;
+                document.getElementById('image-modal').style.display = 'flex';
+                document.getElementById('img-upload').value = '';
+                document.getElementById('img-url').value = '';
+            }
+
+            let tempImgData = null;
+            function handleImageUpload(e) {
+                const file = e.target.files[0];
+                if(!file) return;
+                const reader = new FileReader();
+                reader.onload = (ev) => { tempImgData = ev.target.result; };
+                reader.readAsDataURL(file);
+            }
+
+            function applyImage() {
+                if(!targetImgEl) return;
+                const url = document.getElementById('img-url').value;
+                if(url) {
+                    targetImgEl.src = url;
+                } else if(tempImgData) {
+                    targetImgEl.src = tempImgData;
+                }
+                closeModal('image-modal');
+                saveState();
+            }
+
+            // --- MODALES Y UI ---
+            function switchTab(tabId) {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                event.target.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            }
+
+            function showToast(msg) {
+                const t = document.createElement('div');
+                t.className = 'toast show';
+                t.innerText = msg;
+                ui.toasts.appendChild(t);
+                setTimeout(() => { t.classList.remove('show'); setTimeout(()=>t.remove(), 300); }, 3000);
+            }
+
+            function customConfirm(msg, callback) {
+                document.getElementById('confirm-msg').innerText = msg;
+                document.getElementById('confirm-modal').style.display = 'flex';
+                const btn = document.getElementById('confirm-btn');
+                btn.onclick = () => { callback(); closeModal('confirm-modal'); };
+            }
+
+            function closeModal(id) {
+                document.getElementById(id).style.display = 'none';
+            }
+
+            function setPreview(mode) {
+                document.body.classList.remove('preview-tablet', 'preview-mobile');
+                if(mode !== 'desktop') document.body.classList.add('preview-' + mode);
+                setTimeout(updateOverlay, 300);
+            }
+
+            // --- HISTORIAL (UNDO/REDO) Y ALMACENAMIENTO ---
+            let timeoutId;
+            function saveStateDebounced() {
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(saveState, 500);
+            }
+
+            function saveState() {
+                // Clonar estilos root y HTML interno (excluyendo editor)
+                const styles = document.documentElement.style.cssText;
+                const html = ui.site.innerHTML;
+                
+                historyIdx++;
+                history.length = historyIdx; // Cortar futuro
+                history.push({ html, styles });
+                if(history.length > 50) { history.shift(); historyIdx--; } // Limite 50
+            }
+
+            function undo() {
+                if (historyIdx > 0) {
+                    historyIdx--;
+                    restoreState(history[historyIdx]);
+                }
+            }
+
+            function redo() {
+                if (historyIdx < history.length - 1) {
+                    historyIdx++;
+                    restoreState(history[historyIdx]);
+                }
+            }
+
+            function restoreState(stateObj) {
+                if(!stateObj) return;
+                ui.site.innerHTML = stateObj.html;
+                document.documentElement.style.cssText = stateObj.styles;
+                deselectAll();
+                showToast('Deshacer/Rehacer aplicado');
+            }
+
+            function setupShortcuts() {
+                document.addEventListener('keydown', e => {
+                    if(!isEditing) return;
+                    // Evitar shortcuts si esta escribiendo texto
+                    if(e.target.isContentEditable || e.target.tagName === 'INPUT') return;
+
+                    if (e.key === 'Escape') closePanel();
+                    if (e.key === 'Delete' && selectedEl) deleteSelected();
+                    if (e.ctrlKey && e.key === 'd') { e.preventDefault(); duplicateSelected(); }
+                    if (e.ctrlKey && e.key === 'z') { e.preventDefault(); undo(); }
+                    if (e.ctrlKey && e.key === 'y') { e.preventDefault(); redo(); }
+                });
+            }
+
+            // LocalStorage
+            function saveToLocal() {
+                try {
+                    localStorage.setItem('odis_save', JSON.stringify(history[historyIdx]));
+                    showToast('Progreso guardado localmente');
+                } catch(e) {
+                    showToast('Error al guardar (Cuota superada)');
+                }
+            }
+
+            function loadFromLocal() {
+                const data = localStorage.getItem('odis_save');
+                if(data) {
+                    restoreState(JSON.parse(data));
+                    saveState();
+                    showToast('Progreso cargado');
+                } else {
+                    showToast('No hay datos guardados');
+                }
+            }
+
+            function resetSite() {
+                customConfirm('Se perderán todos los cambios. ¿Continuar?', () => {
+                    localStorage.removeItem('odis_save');
+                    location.reload();
+                });
+            }
+
+            // --- EXPORTAR PRODUCCIÓN (LIMPIEZA 100%) ---
+            function exportHTML() {
+                // Preparar un clon completo del documento
+                const clone = document.documentElement.cloneNode(true);
+                
+                // Limpiar editor
+                const editorRoot = clone.querySelector('#odis-editor-root');
+                if(editorRoot) editorRoot.remove();
+                
+                const editorStyles = clone.querySelector('#editor-styles');
+                if(editorStyles) editorStyles.remove();
+
+                // Limpiar atributos y clases del body
+                clone.querySelector('body').classList.remove('editor-active', 'preview-tablet', 'preview-mobile');
+                
+                // Limpiar atributos inyectados
+                clone.querySelectorAll('[data-editable]').forEach(el => el.removeAttribute('data-editable'));
+                clone.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+                clone.querySelectorAll('.add-btn, .change-img-btn').forEach(el => el.remove());
+                clone.querySelectorAll('[draggable]').forEach(el => el.removeAttribute('draggable'));
+                
+                // Generar blob
+                const htmlContent = '<!DOCTYPE html>\n' + clone.outerHTML;
+                const blob = new Blob([htmlContent], { type: 'text/html' });
+                const url = URL.createObjectURL(blob);
+                
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'odis-tucuman.html';
+                a.click();
+                
+                URL.revokeObjectURL(url);
+                showToast('Archivo exportado correctamente');
+            }
+
+            // Exponer API Pública
+            return {
+                init, toggleEditMode, selectElement, updateStyle, updateVar, duplicateSelected, deleteSelected,
+                addParagraph, addCard, addEvent, addFaq, toggleFaq, switchTab, closePanel, restorePanel,
+                setPreview, openImageModal, handleImageUpload, applyImage, closeModal,
+                exportHTML, saveToLocal, loadFromLocal, resetSite
+            };
+        })();
+
+        // Inicializar al cargar
+        window.addEventListener('DOMContentLoaded', ODIS.init);
+
+    </script>
+</body>
+</html>
